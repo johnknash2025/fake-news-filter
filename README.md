@@ -5,7 +5,7 @@
 ## 概要
 
 このプロジェクトは、ニュース記事をAIで分析し、フェイクニュースの可能性を判定するWebポータルサイトです。  
-フロントエンドはGitHub Pagesで公開し、バックエンドAPIはNetlify FunctionsとOpenAI APIを利用しています。
+フロントエンドとバックエンドAPIの両方をVercelでホスティングし、サーバーレスAPIはVercel Serverless FunctionsとOpenAI APIを利用しています。
 
 ---
 
@@ -21,11 +21,15 @@
 
 ```
 /
-├── netlify/functions/
-│   ├── fetch-news.js      # ニュース取得API
-│   ├── get-stats.js       # 統計情報API
-│   └── analyze-news.js    # ニュース分析API（OpenAI連携）
-├── public/                # フロントエンド（index.html, js, css）
+├── api/
+│   ├── fetch-news.js      # ニュース取得API（Vercel Serverless Function）
+│   ├── get-stats.js       # 統計情報API（Vercel Serverless Function）
+│   └── analyze-news.js    # ニュース分析API（OpenAI連携、Vercel用）
+├── index.html             # フロントエンド
+├── css/
+│   └── style.css
+├── js/
+│   └── app.js
 ├── .gitignore
 ├── README.md
 └── ...
@@ -39,23 +43,25 @@
 - `/api/get-stats`  : 統計情報を取得
 - `/api/analyze-news` : ニュース本文をAIで分析
 
-※Netlify FunctionsのURLに合わせてパスを調整してください。
+※Vercelにデプロイした場合、上記のエンドポイントが自動で有効になります。
 
 ---
 
 ## 環境変数
 
-- `FAUNA_SECRET_KEY` : FaunaDBのシークレットキー
+- `FAUNA_SECRET_KEY` : FaunaDBのシークレットキー（必要な場合のみ）
 - `OPENAI_API_KEY`   : OpenAI APIキー
+
+Vercelの「Settings > Environment Variables」から設定してください。
 
 ---
 
 ## セットアップ手順
 
 1. リポジトリをクローン
-2. 必要なAPIキーをNetlifyの環境変数に設定
-3. Netlifyでデプロイ
-4. フロントエンドはGitHub Pagesで公開
+2. 必要なAPIキーをVercelの環境変数に設定
+3. Vercelでプロジェクトを新規作成し、GitHubリポジトリと連携
+4. デプロイ後、`https://{your-project}.vercel.app/` でアクセス
 
 ---
 
@@ -65,7 +71,7 @@
 A. サイトの即時判定には不向きですが、バックグラウンド処理には利用可能です。
 
 **Q. フロントエンドから直接APIを呼べますか？**  
-A. はい、Netlify Functionsのエンドポイントを利用してください。
+A. はい、VercelのServerless Functionsのエンドポイントを利用してください。
 
 ---
 
@@ -78,5 +84,3 @@ MIT
 ## 貢献
 
 IssueやPull Requestは歓迎します！
-
-vercel用にこのREADMEの内容を修正して
