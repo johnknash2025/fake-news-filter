@@ -78,3 +78,5 @@ MIT
 ## 貢献
 
 IssueやPull Requestは歓迎します！
+
+vercel用にこのREADMEの内容を修正して
