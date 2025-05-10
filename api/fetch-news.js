@@ -1,4 +1,4 @@
-const Parser = require('rss-parser');
+import Parser from 'rss-parser';
 const parser = new Parser();
 
 const RSS_FEEDS = [
@@ -6,7 +6,7 @@ const RSS_FEEDS = [
   { url: 'https://www3.nhk.or.jp/rss/news/cat0.xml', source: 'NHK' }
 ];
 
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   try {
     let news = [];
     for (const feed of RSS_FEEDS) {
@@ -23,6 +23,6 @@ module.exports = async (req, res) => {
     }
     res.status(200).json({ news });
   } catch (error) {
-    res.status(500).json({ error: 'RSS取得に失敗しました' });
+    res.status(500).json({ error: 'RSS取得に失敗しました', detail: error.message });
   }
-};
+}
