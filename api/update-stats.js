@@ -1,3 +1,7 @@
+/**
+ * @vercel/crons 0 7,13 * * *
+ */
+
 const fs = require('fs');
 const path = require('path');
 const faunadb = require('faunadb');

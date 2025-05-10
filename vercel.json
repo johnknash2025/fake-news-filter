@@ -1,7 +1,6 @@
 {
     "functions": {
       "api/update-stats.js": {
-        "schedule": "0 7,13 * * *"
       }
     }
   }
