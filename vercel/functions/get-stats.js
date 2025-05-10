@@ -6,7 +6,8 @@ const client = new faunadb.Client({
   secret: process.env.FAUNA_SECRET_KEY
 });
 
-exports.handler = async function(event, context) {
+// Vercel用にエクスポート形式を修正
+module.exports = async (req, res) => {
   try {
     // 最新のニュースデータを取得
     const newsRef = await client.query(
@@ -54,23 +55,13 @@ exports.handler = async function(event, context) {
       lastUpdated: newsRef.data.timestamp
     };
     
-    return {
-      statusCode: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify(responseData)
-    };
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json(responseData);
   } catch (error) {
     console.error('統計データ取得エラー:', error);
-    return {
-      statusCode: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify({ error: '統計データの取得に失敗しました' })
-    };
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Content-Type', 'application/json');
+    res.status(500).json({ error: '統計データの取得に失敗しました' });
   }
 };
