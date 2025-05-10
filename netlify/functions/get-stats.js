@@ -70,3 +70,7 @@ exports.handler = async function(event, context) {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
+      body: JSON.stringify({ error: '統計データの取得に失敗しました' })
+    };
+  }
+};
