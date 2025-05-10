@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // API エンドポイント（Netlify/Vercel Functions）
-    const API_ENDPOINT = 'https://あなたのネットリファイ関数URL/.netlify/functions/fetch-news';
-    const STATS_ENDPOINT = 'https://あなたのネットリファイ関数URL/.netlify/functions/get-stats';
+    const API_ENDPOINT = '/api/fetch-news';
+    const STATS_ENDPOINT = '/api/get-stats';
     
     // DOM 要素の参照
     const newsContainer = document.getElementById('news-container');
