@@ -15,15 +15,16 @@ module.exports = async (req, res) => {
     );
     
     // 最近の統計データを取得（直近7日間の平均）
-    const startDate = Date.now() - (7 * 24 * 60 * 60 * 1000); // 7日前
+    const startDate = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)); // 7日前
+    const endDate = new Date();
     
     const statsRefs = await client.query(
       q.Map(
         q.Paginate(
           q.Range(
             q.Match(q.Index('stats_by_timestamp')),
-            q.Time(startDate.toString()),
-            q.Time(Date.now().toString())
+            q.Time(startDate.toISOString()),
+            q.Time(endDate.toISOString())
           )
         ),
         q.Lambda('time', q.Get(q.Var('time')))
